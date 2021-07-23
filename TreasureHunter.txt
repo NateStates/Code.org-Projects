@@ -1,0 +1,165 @@
+// I completed the section below with my collaborative partner
+var score = 0;
+var lives = 3;
+setScreen("welcomeScreen");
+
+// My collaborative partner completed this section below
+function resetGame() {
+  positioning();
+  hideBombs();
+  resetScore();
+  resetLives();
+}
+
+// My collaborative partner completed this section below
+function positioning() {
+setPosition("chest", randomNumber(50,280), randomNumber(50, 350));
+setPosition("bomb1", randomNumber(50,280), randomNumber(50, 350));
+setPosition("bomb2", randomNumber(50,280), randomNumber(50, 350));
+setPosition("bomb3", randomNumber(50,280), randomNumber(50, 350));
+setPosition("bomb4", randomNumber(50,280), randomNumber(50, 350));  
+}
+
+//My collaborative partner completed this section below
+function hideBombs() {
+  hideElement("bomb3");
+  hideElement("bomb4");
+}
+
+// My collaborative partner completed this section below
+function resetScore() {
+  if (score!=0) {
+    score = 0;
+  }
+  setText("scoreNum", score);
+}
+
+// My collaborative partner completed this section below
+function resetLives() {
+  if (lives!=3) {
+    lives = 3;
+  }
+  setText("livesNum", lives);
+}
+
+// My collaborative partner completed this section below
+function gameMechanic() {
+   if (score>=5) {
+   promptNum("Out of 0-5, what would you rate this game?");
+  }
+  if (lives<=0) {
+   promptNum("Out of 0-5, what would you rate this game?");
+  }
+  winMechanic();
+  loseMechanic();
+}
+
+// My collaborative partner completed this section below
+function winMechanic() {
+ if (getNumber("scoreNum")>=5) {
+    setScreen("winScreen");
+  }
+}
+
+// My collaborative partner completed this section below
+function loseMechanic() {
+  if (score < 0) {
+    setScreen("gameOverScreen");
+  }
+  if (getNumber("livesNum") <= 0) {
+    setScreen("gameOverScreen");
+  }
+}
+
+// I completed this section independently
+function bombMechanic() {
+  if (lives==0 || score==5) {
+    setScreen("gameOverScreen");
+  } else {
+    livesCount();
+    bombSpawn();
+  }
+}
+
+// I completed this section independently
+function livesCount() {
+  lives = lives - 1;
+  setText("livesNum", lives);
+}
+
+// I completed this section independently
+function bombSpawn() {
+  if (lives == 2) {
+    showElement("bomb3");
+  }
+  if (lives == 1) {
+    showElement("bomb4");
+  }
+}
+
+// I completed this section independently
+onEvent("bomb1", "click", function() {
+  bombMechanic();
+  setPosition("bomb1", randomNumber(50,280), randomNumber(50, 350));
+  gameMechanic();
+});
+
+// I completed this section independently
+onEvent("bomb2", "click", function() {
+  bombMechanic();
+  setPosition("bomb2", randomNumber(50,280), randomNumber(50, 350));
+  gameMechanic();
+});
+
+// I completed this section independently
+onEvent("bomb3", "click", function() {
+  bombMechanic();
+  setPosition("bomb3", randomNumber(50,280), randomNumber(50, 350));
+  gameMechanic(randomNumber(50,280));
+});
+
+// I completed this section independently
+onEvent("bomb4", "click", function() {
+  bombMechanic();
+  setPosition("bomb4", randomNumber(50,280), randomNumber(50, 350));
+  gameMechanic();
+});
+
+// My collaborative partner completed this section below
+onEvent("background", "click", function(){
+lives = lives - 3;
+setText("livesNum", lives);
+loseMechanic();
+});
+
+// My collaborative partner completed this section below
+onEvent("chest", "click", function() {
+  score = score + 1;
+  setText("scoreNum", score);
+  setPosition("chest", randomNumber(50,280), randomNumber(50, 350));
+  gameMechanic();
+});
+
+// My collaborative partner completed this section below
+onEvent("startButton", "click", function() {
+  setScreen("gameScreen");
+  resetGame();
+});
+
+// I completed this section independently
+onEvent("returnMainMenu", "click", function() {
+  setScreen("welcomeScreen");
+  resetGame();
+});
+
+// I completed this section independently
+onEvent("returnMainMenu2", "click", function( ) {
+ setScreen("welcomeScreen");
+ resetGame();
+});
+
+//The images used in this app came from:
+// [1] winScreen treasure chest: https://kit8.net/images/detailed/1/Treasure_chest_flat_vector_illustration_isolated.png
+// [2] gameScreen background: https://cdn2.vectorstock.com/i/1000x1000/69/36/background-of-sea-shore-vector-20846936.jpg
+// [3] gameOverScreen image: https://cdn.shopify.com/s/files/1/0769/4313/products/GAMEOVER_copy_1024x1024.jpg?v=1508717540
+// [4] gameScreen treasure chest: https://www.icarol.com/airs2017/treasure-chest-color/
